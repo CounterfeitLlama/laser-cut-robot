@@ -137,7 +137,7 @@ return new ICadGenerator(){
 		
 		double servoTop = servoReference.getMaxZ()
 		CSG horn = Vitamins.get(conf.getShaftType(),conf.getShaftSize())	
-		
+		CSG cube = new Cube(100, 100, 100).toCSG()
 		servoReference=servoReference
 			.movez(-servoTop)
 
@@ -154,6 +154,7 @@ return new ICadGenerator(){
 			}
 			
 		}
+		add(csg,moveDHValues(cube,dh),dh.getListener())
 		add(csg,moveDHValues(horn,dh),dh.getListener())
 
 		if(neck ==sourceLimb ){
