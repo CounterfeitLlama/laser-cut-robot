@@ -137,7 +137,7 @@ return new ICadGenerator(){
 		
 		double servoTop = servoReference.getMaxZ()
 		CSG horn = Vitamins.get(conf.getShaftType(),conf.getShaftSize())	
-		CSG cube = new Cube(1000, 1000, 1000).toCSG()
+		CSG cube = new Cube(25, 25, 25).toCSG()
 		servoReference=servoReference
 			.movez(-servoTop)
 
