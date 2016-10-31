@@ -137,13 +137,18 @@ return new ICadGenerator(){
 		
 		double servoTop = servoReference.getMaxZ()
 		CSG horn = Vitamins.get(conf.getShaftType(),conf.getShaftSize())	
-		CSG cube = new Cube(25, 25, 25).toCSG()
+		CSG top = new Cube(45, 45, 10).toCSG().movez(5)
+		top = top.difference(horn)
+		CSG bottom = new Cube(45, 45, 10).toCSG().movez(-5)
 		servoReference=servoReference
 			.movez(-servoTop)
+		bottom = bottom.difference(servoReference)
 
+		CSG connector = new Cylinder(5, 5, 20, (int)30).toCSG().rotx(90).movey(20)
+		connector = connector.union(new Cylinder(7, 7, 3, (int)30).toCSG().rotx(90).movey(30))
 		
 		
-		if(linkIndex==0){
+		/*if(linkIndex==0){
 			add(csg,servoReference.clone(),sourceLimb.getRootListener())
 			add(csg,servoReference,dh.getListener())
 		}else{
@@ -153,9 +158,11 @@ return new ICadGenerator(){
 				// load the end of limb
 			}
 			
-		}
-		add(csg,moveDHValues(cube,dh),dh.getListener())
-		add(csg,moveDHValues(horn,dh),dh.getListener())
+		}*/
+		add(csg,moveDHValues(top,dh),dh.getListener())
+		add(csg,moveDHValues(bottom,dh),dh.getListener())
+		add(csg,moveDHValues(connector,dh),dh.getListener())
+		//add(csg,moveDHValues(horn,dh),dh.getListener())
 
 		if(neck ==sourceLimb ){
 			
