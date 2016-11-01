@@ -43,7 +43,10 @@ class Feet implements ICadGenerator, IParameterChanged{
 		if(linkIndex ==dhLinks.size()-1){
 			println "Found foot limb" 
 			CSG foot =new Cube(10,10,thickness.getMM()).toCSG() // a one line Cylinder
-			
+			CSG top = new Cube(45, 45, 10).toCSG().movez(5)
+			top = defaultCadGen.moveDHValues(top,dh)
+
+			defaultCadGen.add(allCad,top,dh.getListener())
 			defaultCadGen.add(allCad,foot,dh.getListener())
 		}
 		return allCad;
