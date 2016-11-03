@@ -38,6 +38,30 @@ class Feet implements ICadGenerator, IParameterChanged{
 		ArrayList<CSG> allCad=defaultCadGen.generateCad(d,linkIndex);
 		ArrayList<DHLink> dhLinks=d.getChain().getLinks();
 		DHLink dh = dhLinks.get(linkIndex)
+		
+		LinkConfiguration conf = d.getLinkConfiguration(linkIndex);
+
+		HashMap<String, Object> shaftmap = Vitamins.getConfiguration(conf.getShaftType(),conf.getShaftSize())
+		double hornOffset = 	shaftmap.get("hornThickness")	
+		
+		// creating the servo
+		CSG servoReference=   Vitamins.get(conf.getElectroMechanicalType(),conf.getElectroMechanicalSize())
+		.transformed(new Transform().rotZ(90))
+		
+		double servoTop = servoReference.getMaxZ()
+
+		/*if(linkIndex==0){
+			//defaultCadGen.add(allCad,servoReference.clone(),d.getRootListener())
+			defaultCadGen.add(allCad,servoReference,dh.getListener())
+		}else{
+			if(linkIndex<dhLinks.size()-1)
+				defaultCadGen.add(allCad,servoReference,dh.getListener())
+			else{
+				// load the end of limb
+			}
+			
+		}*/
+		
 		//If you want you can add things here
 		//allCad.add(myCSG);
 		if(linkIndex ==dhLinks.size()-1){
