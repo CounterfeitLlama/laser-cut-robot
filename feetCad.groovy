@@ -49,22 +49,10 @@ class Feet implements ICadGenerator, IParameterChanged{
 		.transformed(new Transform().rotZ(90))
 		
 		double servoTop = servoReference.getMaxZ()
-
-		/*if(linkIndex==0){
-			//defaultCadGen.add(allCad,servoReference.clone(),d.getRootListener())
-			defaultCadGen.add(allCad,servoReference,dh.getListener())
-		}else{
-			if(linkIndex<dhLinks.size()-1)
-				defaultCadGen.add(allCad,servoReference,dh.getListener())
-			else{
-				// load the end of limb
-			}
-			
-		}*/
 		
 		//If you want you can add things here
 		//allCad.add(myCSG);
-		if(linkIndex ==dhLinks.size()-1){
+		if (linkIndex == dhLinks.size() - 1){
 			println "Found foot limb" 
 			CSG foot =new Cube(10,10,thickness.getMM()).toCSG() // a one line Cylinder
 			CSG top = new Cube(45, dh.getR(), 10).toCSG().toYMin()
@@ -72,6 +60,18 @@ class Feet implements ICadGenerator, IParameterChanged{
 
 			defaultCadGen.add(allCad,top,dh.getListener())
 			defaultCadGen.add(allCad,foot,dh.getListener())
+		}
+		else if (linkIndex == 0) {
+			CSG shoulder = new Cube(10, dh.getR(), 45).toCSG().toYMin()
+			shoulder = defaultCadGen.moveDHValues(shoulder,dh)
+
+			defaultCadGen.add(allCad,shoulder,dh.getListener())
+		}
+		else {
+			CSG forearm = new Cube(45, dh.getR(), 10).toCSG().toYMin()
+			forearm = defaultCadGen.moveDHValues(forearm,dh)
+
+			defaultCadGen.add(allCad,forearm,dh.getListener())
 		}
 		return allCad;
 	}
