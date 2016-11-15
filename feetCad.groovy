@@ -15,7 +15,7 @@ class Feet implements ICadGenerator, IParameterChanged{
 	                              "laserCutCad.groovy" , // file to load
 	                              null
                         )
-	LengthParameter thickness 		= new LengthParameter("Material Thickness",3.15,[10,1])
+	LengthParameter thickness 		= new LengthParameter("Material Thickness",7,[10,1])
 	LengthParameter headDiameter 		= new LengthParameter("Head Dimeter",100,[200,50])
 	LengthParameter snoutLen 		= new LengthParameter("Snout Length",63,[200,50])
 	LengthParameter jawHeight 		= new LengthParameter("Jaw Height",32,[200,10])
@@ -45,7 +45,7 @@ class Feet implements ICadGenerator, IParameterChanged{
 		double hornOffset = 	shaftmap.get("hornThickness")
 		
 		CSG horn = Vitamins.get(conf.getShaftType(),conf.getShaftSize())
-		//defaultCadGen.add(allCad,defaultCadGen.moveDHValues(horn,dh),dh.getListener())
+		defaultCadGen.add(allCad,defaultCadGen.moveDHValues(horn,dh),dh.getListener())
 		
 		// creating the servo
 		CSG servoReference=   Vitamins.get(conf.getElectroMechanicalType(),conf.getElectroMechanicalSize())
@@ -57,8 +57,8 @@ class Feet implements ICadGenerator, IParameterChanged{
 		//allCad.add(myCSG);
 		if (linkIndex == dhLinks.size() - 1){
 			println "Found foot limb" 
-			CSG foot =new Cube(10,10,thickness.getMM()).toCSG() // a one line Cylinder
-			CSG top = new Cube(45, dh.getR(), 10).toCSG().toYMin()
+			CSG foot =new Cube(20,50,55).toCSG() // a one line Cylinder
+			CSG top = new Cube(45, dh.getR(), 40).toCSG().toYMin()
 			top = top.difference(horn)
 			top = defaultCadGen.moveDHValues(top,dh)
 
@@ -66,14 +66,14 @@ class Feet implements ICadGenerator, IParameterChanged{
 			defaultCadGen.add(allCad,foot,dh.getListener())
 		}
 		else if (linkIndex == 0) {
-			CSG shoulder = new Cube(10, dh.getR(), 45).toCSG().toYMin()
+			CSG shoulder = new Cube(40, dh.getR(), 45).toCSG().toYMin()
 			shoulder = shoulder.difference(horn)
 			shoulder = defaultCadGen.moveDHValues(shoulder,dh)
 
 			defaultCadGen.add(allCad,shoulder,dh.getListener())
 		}
 		else {
-			CSG forearm = new Cube(45, dh.getR(), 10).toCSG().toYMin()
+			CSG forearm = new Cube(45, dh.getR(), 40).toCSG().toYMin()
 			forearm = forearm.difference(horn)
 			forearm = defaultCadGen.moveDHValues(forearm,dh)
 
