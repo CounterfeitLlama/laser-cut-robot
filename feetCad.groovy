@@ -42,7 +42,10 @@ class Feet implements ICadGenerator, IParameterChanged{
 		LinkConfiguration conf = d.getLinkConfiguration(linkIndex);
 
 		HashMap<String, Object> shaftmap = Vitamins.getConfiguration(conf.getShaftType(),conf.getShaftSize())
-		double hornOffset = 	shaftmap.get("hornThickness")	
+		double hornOffset = 	shaftmap.get("hornThickness")
+		
+		CSG horn = Vitamins.get(conf.getShaftType(),conf.getShaftSize())
+		//defaultCadGen.add(allCad,defaultCadGen.moveDHValues(horn,dh),dh.getListener())
 		
 		// creating the servo
 		CSG servoReference=   Vitamins.get(conf.getElectroMechanicalType(),conf.getElectroMechanicalSize())
@@ -56,6 +59,7 @@ class Feet implements ICadGenerator, IParameterChanged{
 			println "Found foot limb" 
 			CSG foot =new Cube(10,10,thickness.getMM()).toCSG() // a one line Cylinder
 			CSG top = new Cube(45, dh.getR(), 10).toCSG().toYMin()
+			top = top.difference(horn)
 			top = defaultCadGen.moveDHValues(top,dh)
 
 			defaultCadGen.add(allCad,top,dh.getListener())
@@ -63,12 +67,14 @@ class Feet implements ICadGenerator, IParameterChanged{
 		}
 		else if (linkIndex == 0) {
 			CSG shoulder = new Cube(10, dh.getR(), 45).toCSG().toYMin()
+			shoulder = shoulder.difference(horn)
 			shoulder = defaultCadGen.moveDHValues(shoulder,dh)
 
 			defaultCadGen.add(allCad,shoulder,dh.getListener())
 		}
 		else {
 			CSG forearm = new Cube(45, dh.getR(), 10).toCSG().toYMin()
+			forearm = forearm.difference(horn)
 			forearm = defaultCadGen.moveDHValues(forearm,dh)
 
 			defaultCadGen.add(allCad,forearm,dh.getListener())
