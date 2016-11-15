@@ -23,7 +23,7 @@ class allViataminMaker implements IParameterChanged{
 				StringParameter typParam = new StringParameter(	type+" Default",
 														options.get(0),
 														options)
-				CSG vitaminFromScript = Vitamins.get("capScrew","6#32")
+				CSG vitaminFromScript = Vitamins.get( type,typParam.getStrValue())
 									.movey(40*numVits++)
 				CSGDatabase.addParameterListener(typParam.getName(),this);
 				vitaminFromScript.setRegenerate({getParts()})					
