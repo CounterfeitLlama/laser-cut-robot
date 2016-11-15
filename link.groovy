@@ -3,7 +3,7 @@ import eu.mihosoft.vrl.v3d.parametrics.*;
 
 CSG bottom = new Cube(50, 120, 5).toCSG().movez(12.5)
 CSG top = new Cube(50, 120, 30).toCSG().movez(30)
-CSG horn = new Cube(45, 45, 5).toCSG().movey(-30).movez(15)
+CSG horn = Vitamins.get("hobbyServoHorn", "standard4").movey(-30).movez(15)//new Cube(45, 45, 5).toCSG().movey(-30).movez(15)
 
 CSG screw = Vitamins.get("capScrew", "M3").movez(42)
 CSG screw1 = screw.movex(20).movey(50)
